@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status do Nginx</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Status do Servidor Nginx</h1>
+        <div id="status">Carregando...</div>
+        <div id="timestamp"></div>
+        <button class="reload-button" onclick="window.location.reload()">Recarregar Página</button>
+    </div>
+
+    <script>
+        async function fetchStatus() {
+            try {
+                const response = await fetch('status.json');
+                const data = await response.json();
+                const statusElement = document.getElementById('status');
+                statusElement.innerText = `Status: ${data.status}`;
+                statusElement.setAttribute('data-status', data.status); // Adiciona atributo para estilização
+                document.getElementById('timestamp').innerText = `Última atualização: ${data.timestamp}`;
+            } catch (error) {
+                document.getElementById('status').innerText = "Erro ao carregar o status";
+            }
+        }
+        setInterval(fetchStatus, 5000);
+        fetchStatus();
+    </script>
+</body>
+</html>
