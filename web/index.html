@@ -17,7 +17,7 @@
     <script>
         async function fetchStatus() {
             try {
-                const response = await fetch('status.json');
+		const response = await fetch(`status.json?${new Date().getTime()}`);
                 const data = await response.json();
                 const statusElement = document.getElementById('status');
                 statusElement.innerText = `Status: ${data.status}`;
@@ -27,7 +27,7 @@
                 document.getElementById('status').innerText = "Erro ao carregar o status";
             }
         }
-        setInterval(fetchStatus, 5000);
+	setInterval(fetchStatus, 300000);
         fetchStatus();
     </script>
 </body>
